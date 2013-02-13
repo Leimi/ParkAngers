@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkAngers</string>
+    <string name="user_agent">Appli mobile parking Angers ParkAngers Android 2.3.3</string>
+	<string name="refresh">Rafraîchir</string>
+</resources>
