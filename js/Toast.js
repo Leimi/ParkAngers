@@ -1,26 +1,28 @@
 /**
  * ultra simple "toasts" notifications like on android, without queue, but with "states" (success, warning, error...)
  *
- * style your #toast as you wish and add at least a little 
- * 		#toast[data-toast-state="hidden"] { display: none; } 
- * so that it doesn't display when not wanted 
+ * style your #toast as you wish and add at least a little
+ *		#toast[data-toast-state="hidden"] { display: none; }
+ * so that it doesn't display when not wanted
  */
 var Toast = function(options) {
-	this.opts = $.extend({
-		selector: '#toast',
-		dataAttribute: 'toast-state',
-		duration: 4000
-	}, options);
+	options = options || {};
+	this.opts = {};
+	this.opts.id = options.id || 'toast';
+	this.opts.dataAttribute = options.dataAttribute || 'toast-state';
+	this.opts.duration = options.duration || 4000;
+	
+	this.el = document.getElementById(this.opts.id);
 	this.hide(true);
 };
 Toast.prototype = {
 	show: function(string, state) {
-		var that = this,
-			$el = $(this.opts.selector),
-			state = state ? state : 'visible';
+		var that = this;
+		state = state || 'visible';
 		this.hide(true);
-		$el.attr('data-' + this.opts.dataAttribute, state).html(string);
-		this.timeout = setTimeout(function() { 
+		this.el.setAttribute('data-' + this.opts.dataAttribute, state);
+		this.el.innerHTML = string;
+		this.timeout = setTimeout(function() {
 			that.hide();
 		}, this.opts.duration);
 	},
@@ -29,6 +31,6 @@ Toast.prototype = {
 			clearTimeout(this.timeout);
 			this.timeout = null;
 		}
-		$(this.opts.selector).attr('data-' + this.opts.dataAttribute, 'hidden');
+		this.el.setAttribute('data-' + this.opts.dataAttribute, 'hidden');
 	}
-}
+};
