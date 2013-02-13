@@ -84,7 +84,7 @@ L.Control.Geolocation = L.Control.extend({
 		if (!this.watching) return;
 		var pos = data.latlng,
 			acc = data.accuracy,
-			zoom = Math.min(this.map.getBoundsZoom(data.bounds), this.map.getMaxZoom());
+			zoom = this.map.getZoom();
 		if (acc < 1000) {
 			if (this.bounds.contains(pos)) {
 				this.pos = pos;
