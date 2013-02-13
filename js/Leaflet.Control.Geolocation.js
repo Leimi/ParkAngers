@@ -55,6 +55,7 @@ L.Control.Geolocation = L.Control.extend({
 	startFocus: function() {
 		L.DomUtil.removeClass(this.container, this.className + '-off');
 		L.DomUtil.addClass(this.container, this.className + '-on');
+		this.fire('message', { text: "Recherche de votre position en cours...", state: "info"});
 		this.focus = true;
 		if (this.pos && this.zoom)
 			this.map.setView(this.pos, this.zoom);
