@@ -12,9 +12,8 @@ h1 {
 	z-index: 1010;
 	bottom: 100px;
 	text-align: center;
-	left: 50%;
-	width: 300px;
-	margin-left: -150px;
+	left: 5%;
+	right: 5%;
 }
 #toast[data-toast-state="hidden"] {
 	display: none;
