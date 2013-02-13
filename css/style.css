@@ -33,7 +33,7 @@ h1 {
 	right: 5%;
 	bottom: 5%;
 	padding: 1.4em;
-	border: 2px solid #777;
+	border: 5px solid #ddd;
 	border-radius: 3px;
 	background: white;
 	z-index: 1000;
@@ -65,6 +65,14 @@ h1 {
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f1f1f1));
 	clear: right;
 	z-index: 100;
+}
+
+.leaflet-control.leaflet-control-geolocation {
+	padding: 0;
+}
+
+.leaflet-control.leaflet-control-geolocation a {
+	padding: 4px;
 }
 
 @-webkit-keyframes "active-control" {
