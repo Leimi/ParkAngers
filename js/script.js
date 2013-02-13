@@ -6,6 +6,8 @@
 		map,
 		angers = new L.LatLngBounds(new L.LatLng(47.4, -0.68), new L.LatLng(47.53, -0.43)),
 		zoomControl,
+		aboutControl,
+		attributionControl,
 		geolocationControl,
 		toast = new Toast(),
 		interval = null;
@@ -26,20 +28,25 @@
 		};
 
 	//http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-	layer = new L.TileLayer('http://{s}.tile.cloudmade.com/706e5df4d2b249d7b13db6f130b5ec8a/998/256/{z}/{x}/{y}.png', {
-		attribution: '&copy; Cloudmade'
-	});
+	layer = new L.TileLayer('http://{s}.tile.cloudmade.com/706e5df4d2b249d7b13db6f130b5ec8a/998/256/{z}/{x}/{y}.png');
 
 	map = new L.Map("parking-map", {
 		center: new L.LatLng(47.468891656982414, -0.5517196655273438),
 		zoom: 15,
 		layers: layer,
 		zoomControl: false,
+		attributionControl: false,
 		maxBounds: angers
 	});
 
 	zoomControl = new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
-	var aboutControl = new L.Control.About({el : document.getElementById('help') }).addTo(map);
+
+	attributionControl = new L.Control.Attribution({position: 'bottomright', prefix: ''})
+		.addAttribution('&copy; Map CloudMade')
+		.addAttribution('Données OSM &amp; Sara-Angers')
+		.addTo(map);
+	
+	aboutControl = new L.Control.About({el : document.getElementById('help') }).addTo(map);
 
 	geolocationControl = new L.Control.Geolocation({position: 'topleft', bounds: angers }).addTo(map);
 	geolocationControl.on('message', function(message) {
