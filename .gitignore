@@ -4,3 +4,4 @@
 *.sublime-workspace
 *en conflit*
 sftp-config.json
+node_modules/
