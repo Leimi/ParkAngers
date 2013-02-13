@@ -396,7 +396,6 @@ L.Control.About = L.Control.extend({
 			L.DomUtil.removeClass(this.el, 'hidden');
 		else
 			L.DomUtil.addClass(this.el, 'hidden');
-		L.DomEvent.preventDefault(e);
 	}
 });
 /**
