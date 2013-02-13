@@ -10,9 +10,9 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<!-- <link rel="stylesheet" href="leaflet/leaflet.css">
-		<link rel="stylesheet" href="css/style.css"> -->
-		<link rel="stylesheet" href="dist/styles.min.css">
+		<link rel="stylesheet" href="leaflet/leaflet.css">
+		<link rel="stylesheet" href="css/style.css"> 
+		<!-- <link rel="stylesheet" href="dist/styles.min.css">-->
 	</head>
 	<body>
 		<!--[if lte IE 8]>
@@ -20,19 +20,29 @@
 		<![endif]-->
 
 		<noscript>Désolé, <a href="http://www.enable-javascript.com/fr/" target="_blank">JavaScript requis</a> !</noscript>
-
 		<div id="parking-map">
 
 		</div>
 
+		<div id="help">
+			<h1>Parkangers</h1>
+
+			<p>Cette carte vous montre en un clin d'oeil, et en temps réel, le nombre de places de parking restantes sur Angers.</p>
+			<p>Vous êtes même géolocalisé ! C'est pas génial ça ?</p>
+
+			<p>Application réalisée à l'arrache par <a href="http://manu.habite.la">Emmanuel Pelletier</a>, données tirées de sara-angers.fr.</p>
+		</div>
+
 		<div id="toast" data-toast-state="hidden" class="box"></div>
 
-		<!-- <script src="js/geolocation.js"></script>
+		<script src="js/microajax.js"></script>
+		<script src="js/geolocation.js"></script>
 		<script src="js/Toast.js"></script>
 		<script src="leaflet/leaflet.js"></script>
 		<script src="js/Leaflet.Control.Geolocation.js"></script>
-		<script src="js/script.js"></script>-->
-		<script src="dist/scripts.min.js"></script>
+		<script src="js/Leaflet.Control.About.js"></script>
+		<script src="js/script.js"></script>
+		<!-- <script src="dist/scripts.min.js"></script>-->
 		<!--<script>
 			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
 			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

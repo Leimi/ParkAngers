@@ -25,10 +25,11 @@
 			"Parking Berges de Maine": { places: '', coords: new L.LatLng(47.47925, -0.55015) }
 		};
 
+	L.DomUtil.addClass( document.getElementById('help'), 'hidden' );
 
 	//http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 	layer = new L.TileLayer('http://{s}.tile.cloudmade.com/706e5df4d2b249d7b13db6f130b5ec8a/998/256/{z}/{x}/{y}.png', {
-		attribution: '&copy; OpenStreetMap, CC-BY-SA'
+		attribution: '&copy; Cloudmade'
 	});
 
 	map = new L.Map("parking-map", {
@@ -40,6 +41,7 @@
 	});
 
 	zoomControl = new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
+	var aboutControl = new L.Control.About({el : document.getElementById('help') }).addTo(map);
 
 	geolocationControl = new L.Control.Geolocation({position: 'topleft', bounds: angers }).addTo(map);
 	geolocationControl.on('message', function(message) {

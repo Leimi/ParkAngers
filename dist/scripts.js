@@ -360,6 +360,44 @@ L.Control.Geolocation = L.Control.extend({
 		this.fire('message', {text: text, state: "error"});
 	}
 });
+L.Control.About = L.Control.extend({
+	options: {
+		position: 'topright'
+	},
+
+	includes: L.Mixin.Events,
+
+	initialize: function (options) {
+		L.Util.setOptions(this, options);
+		this.el = (options.el) ? options.el : null;
+	},
+
+	onAdd: function (map) {
+		this.map = map;
+		this.className = 'leaflet-control-about';
+		this.container = L.DomUtil.create('div', this.className);
+		this.container.innerHTML = "&nbsp;?&nbsp;";
+
+		if (!L.Browser.touch) {
+			L.DomEvent.disableClickPropagation(this.container);
+		} else {
+			L.DomEvent.addListener(this.container, 'click', L.DomEvent.stopPropagation);
+		}
+
+		L.DomEvent.addListener(this.container, 'click', this.toggle, this);
+		L.DomEvent.addListener(this.el, 'click', this.toggle, this);
+
+		return this.container;
+	},
+
+	toggle: function(e) {
+		if (L.DomUtil.hasClass(this.el, 'hidden'))
+			L.DomUtil.removeClass(this.el, 'hidden');
+		else
+			L.DomUtil.addClass(this.el, 'hidden');
+		L.DomEvent.preventDefault(e);
+	}
+});
 /**
  * A L ARAAAAAAAACHEEUUUH
  */
@@ -387,10 +425,11 @@ L.Control.Geolocation = L.Control.extend({
 			"Parking Berges de Maine": { places: '', coords: new L.LatLng(47.47925, -0.55015) }
 		};
 
+	L.DomUtil.addClass( document.getElementById('help'), 'hidden' );
 
 	//http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 	layer = new L.TileLayer('http://{s}.tile.cloudmade.com/706e5df4d2b249d7b13db6f130b5ec8a/998/256/{z}/{x}/{y}.png', {
-		attribution: '&copy; OpenStreetMap, CC-BY-SA'
+		attribution: '&copy; Cloudmade'
 	});
 
 	map = new L.Map("parking-map", {
@@ -402,6 +441,7 @@ L.Control.Geolocation = L.Control.extend({
 	});
 
 	zoomControl = new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
+	var aboutControl = new L.Control.About({el : document.getElementById('help') }).addTo(map);
 
 	geolocationControl = new L.Control.Geolocation({position: 'topleft', bounds: angers }).addTo(map);
 	geolocationControl.on('message', function(message) {
