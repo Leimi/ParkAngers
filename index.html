@@ -12,19 +12,23 @@
 		
 		<link rel="stylesheet" href="leaflet/leaflet.css">
 		<link rel="stylesheet" href="css/style.css">
-		<script src="js/modernizr.custom.js"></script>
 	</head>
 	<body>
 		<!--[if lte IE 8]>
 		   <p class="obsolete-browser">Vous utilisez un navigateur <strong>obsolète</strong>. <a href="http://browsehappy.com/">Mettez-le à jour</a> pour naviguer sur Internet de façon <strong>sécurisée</strong> !</p>
 	   <![endif]-->
 
-		<div id="map">
+		<div id="parking-map">
 
 		</div>
 
+		<div id="toast" class="box"></div>
 
+		<script>document.write('<script src=js/' +	('__proto__' in {} ? 'zepto' : 'jquery') + '.min.js><\/script>')</script>
+		<script src="js/geolocation.js"></script>
+		<script src="js/Toast.js"></script>
 		<script src="leaflet/leaflet.js"></script>
+		<script src="js/Leaflet.Control.Geolocation.js"></script>
 		<script src="js/script.js"></script>
 		<!--<script>
 			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
