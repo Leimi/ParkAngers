@@ -10,7 +10,7 @@
 		attributionControl,
 		geolocationControl,
 		toast = new Toast(),
-		interval = null;
+		interval = null,
 		parkings = {
 			"Parking Saint Laud": { places: '', coords: new L.LatLng(47.46467, -0.55926) },
 			"Parking Marengo": { places: '', coords: new L.LatLng(47.46519, -0.55481) },
@@ -64,8 +64,10 @@
 				break;
 			name = links[i].content.replace(/^\s+|\s+$/g, '') || null;
 			count = links[i].small.content || null;
-			if (name && name in parkings && count)
-				parkings[name]['places'] = count*1;
+			if (name && name in parkings && count) {
+				count = count*1 < 0 ? 0 : count*1;
+				parkings[name]['places'] = count;
+			}
 		}
 		updateMarkers();
 	};
@@ -106,13 +108,18 @@
 	var check = function() {
 		microAjax('php/places.php', function(res) {
 			if (res.status == 200) {
-				getParkingPlaces(JSON.parse(res.responseText));
+				try {
+					getParkingPlaces(JSON.parse(res.responseText));
+				} catch (e) {
+					console.log('Erreur ParkAngers :', e.message);
+				}
 			}
 		});
 	};
 
-	var startChecking = function() {
-		check();
+	var startChecking = function(checkAtStart) {
+		checkAtStart = typeof checkAtStart !== "undefined" ? !!checkAtStart : true;
+		if (checkAtStart) check();
 		interval = setInterval(function() { check(); }, 30000);
 	};
 
@@ -121,5 +128,10 @@
 		interval = null;
 	};
 
-	startChecking();
+	if (typeof parkAngersCachedData !== "undefined") {
+		getParkingPlaces(parkAngersCachedData);
+		startChecking(false);
+	} else {
+		startChecking();
+	}
 })();

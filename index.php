@@ -1,3 +1,4 @@
+<?php $debug = false; $time = time(); $cssVersion = 10; $jsVersion = 10; ?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -6,10 +7,12 @@
 		<title>ParkAngers : le plan qui t'indique les places de parkings disponibles en temps réel à Angers</title>
 		<meta name="description" content="Le plan qui t'indique les places de parkings disponibles en temps réel à Angers. Avec un peu de géolocalisation en bonus.">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- 		<link rel="stylesheet" href="leaflet/leaflet.css">
-		<link rel="stylesheet" href="css/style.css">
- -->		<link rel="stylesheet" href="dist/styles.min.css?v=2">
+		<?php if ($debug): ?>
+		<link rel="stylesheet" href="leaflet/leaflet.css?v=<?php echo $time ?>">
+		<link rel="stylesheet" href="css/style.css?v=<?php echo $time ?>">
+		<?php else: ?>
+		<link rel="stylesheet" href="dist/styles.min.css?v=<?php echo $cssVersion ?>">
+		<?php endif; ?>
 	</head>
 	<body>
 		<!--[if lte IE 8]>
@@ -32,19 +35,25 @@
 
 		<div id="toast" data-toast-state="hidden" class="box"></div>
 
-		<!--<script src="js/microajax.js?v=22"></script>
-		<script src="js/geolocation.js?v=22"></script>
-		<script src="js/Toast.js?v=22"></script>
-		<script src="leaflet/leaflet.js?v=22"></script>
-		<script src="js/Leaflet.Control.Geolocation.js?v=22"></script>
-		<script src="js/Leaflet.Control.About.js?v=22"></script>
-		<script src="js/script.js?v=222"></script>-->
-		<script src="dist/scripts.min.js?v=6"></script>
-		<!--<script>
-			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-			g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-			s.parentNode.insertBefore(g,s)}(document,'script'));
-		</script>-->
+		<?php 
+		$cachedFile = __DIR__ . '/php/places.json';
+		if (file_exists($cachedFile) && filemtime($cachedFile) > (time()-(60*5))) {
+			$json = file_get_contents($cachedFile);
+			json_decode($json);
+			if (json_last_error() == JSON_ERROR_NONE)
+				echo "<script>parkAngersCachedData = ", $json, ";</script>";
+		}
+		?>
+		<?php if ($debug): ?>
+		<script src="js/microajax.js?v=<?php echo $time ?>"></script>
+		<script src="js/geolocation.js?v=<?php echo $time ?>"></script>
+		<script src="js/Toast.js?v=<?php echo $time ?>"></script>
+		<script src="leaflet/leaflet.js?v=<?php echo $time ?>"></script>
+		<script src="js/Leaflet.Control.Geolocation.js?v=<?php echo $time ?>"></script>
+		<script src="js/Leaflet.Control.About.js?v=<?php echo $time ?>"></script>
+		<script src="js/script.js?2v=<?php echo $time ?>"></script>
+		<?php else: ?>
+		<script src="dist/scripts.min.js?v=<?php echo $jsVersion ?>"></script>
+		<?php endif; ?>
 	</body>
 </html>

@@ -19,13 +19,20 @@ function getYqlResults($query) {
 	return array('code' => $infos['http_code'], 'response' => $response);
 }
 
-$places = getYqlResults("select * from html where url='http://www.sara-angers.fr/mobile' and xpath='//li/a[contains(@href,\"#\")]'");
+$cachedFile = __DIR__ . '/places.json';
+if (file_exists($cachedFile) && filemtime($cachedFile) > (time()-29))
+	echo file_get_contents($cachedFile); 
+else {
+	$places = getYqlResults("select * from html where url='http://www.sara-angers.fr/mobile' and xpath='//li/a[contains(@href,\"#\")]'");
 
-if ($places['code'] == 200) {
-	$places = $places['response']->a;
-	foreach ($places as &$place) {
-		$place->content = trim($place->content);
+	if ($places['code'] == 200) {
+		$places = $places['response']->a;
+		foreach ($places as &$place) {
+			$place->content = trim($place->content);
+		}
+		$data = json_encode($places);
+		echo $data;
+		file_put_contents($cachedFile, $data);
 	}
-	echo json_encode($places);
 }
 ?>
